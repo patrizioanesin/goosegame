@@ -40,17 +40,31 @@ public class GooseGame {
 
         if (comandi[0].equals("move")) {
             int posizioneCorrente = posizioni.get(comandi[1]);
-            int sum  = posizioneCorrente + Integer.parseInt(comandi[2])  + Integer.parseInt(comandi[3]);
+            int sum = calculateNewPosition(comandi, posizioneCorrente);
             posizioni.replace(comandi[1],sum);
-            String posizionePrecedente = posizioneCorrente+"";
-            if (posizioneCorrente == 0)
-                posizionePrecedente = "Start";
+            String posizionePrecedente = Integer.toString(posizioneCorrente);
+            posizionePrecedente = chkStartPosition(posizioneCorrente, posizionePrecedente);
             String output = comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " + comandi[1] +" moves from "+posizionePrecedente+" to " + sum;
-            if (sum > 60)
-                output = output + ". " + comandi[1] + " Wins!!";
+            output = chkWinner(comandi, sum, output);
             return output;
         }
 
         return "Comando Sconosiuto";
+    }
+
+    private int calculateNewPosition(String[] comandi, int posizioneCorrente) {
+        return posizioneCorrente + Integer.parseInt(comandi[2])  + Integer.parseInt(comandi[3]);
+    }
+
+    private String chkStartPosition(int posizioneCorrente, String posizionePrecedente) {
+        if (posizioneCorrente == 0)
+            posizionePrecedente = "Start";
+        return posizionePrecedente;
+    }
+
+    private String chkWinner(String[] comandi, int sum, String output) {
+        if (sum > 60)
+            output = output + ". " + comandi[1] + " Wins!!";
+        return output;
     }
 }
