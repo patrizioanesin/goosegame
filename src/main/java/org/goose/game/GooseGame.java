@@ -44,7 +44,9 @@ public class GooseGame {
             posizioni.replace(comandi[1],sum);
             String posizionePrecedente = Integer.toString(posizioneCorrente);
             posizionePrecedente = chkStartPosition(posizioneCorrente, posizionePrecedente);
-            String output = comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " + comandi[1] +" moves from "+posizionePrecedente+" to " + sum;
+
+
+            String output = comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " + comandi[1] +" moves from " + posizionePrecedente;
             output = chkWinner(comandi, sum, output);
             return output;
         }
@@ -63,8 +65,18 @@ public class GooseGame {
     }
 
     private String chkWinner(String[] comandi, int sum, String output) {
-        if (sum > 60)
-            output = output + ". " + comandi[1] + " Wins!!";
-        return output;
+        String esito = "";
+        if (sum == 63) {
+            esito = ". " + comandi[1] + " Wins!!";
+            return output + " to 63" + esito;
+        }
+        else if (sum > 63){
+            Integer overposition = sum - 63;
+            sum = sum - overposition;
+
+            esito = ". " + comandi[1] + " bounces! Pippo returns to " + (sum - overposition);
+            return output + " to 63" + esito;
+        }
+        return  output + " to " + sum;
     }
 }

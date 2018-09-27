@@ -73,4 +73,13 @@ public class GooseGameTest {
 
         assertEquals("Pippo rools 1, 2. Pippo moves from 60 to 63. Pippo Wins!!" ,goso.userWrite("move Pippo 1, 2")  );
     }
+
+    @Test
+    public void playerPippoWinExactShooting(){
+        goso.add(new Player("Pippo"));
+        goso.userWrite("move Pippo 30, 30");
+
+        assertEquals("Pippo rools 3, 2. Pippo moves from 60 to 63. Pippo bounces! Pippo returns to 61" ,goso.userWrite("move Pippo 3, 2")  );
+    }
+
 }
