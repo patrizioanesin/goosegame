@@ -45,7 +45,10 @@ public class GooseGame {
             String posizionePrecedente = posizioneCorrente+"";
             if (posizioneCorrente == 0)
                 posizionePrecedente = "Start";
-            return comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " + comandi[1] +" moves from "+posizionePrecedente+" to " + sum;
+            String output = comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " + comandi[1] +" moves from "+posizionePrecedente+" to " + sum;
+            if (sum > 60)
+                output = output + ". " + comandi[1] + " Wins!!";
+            return output;
         }
 
         return "Comando Sconosiuto";
