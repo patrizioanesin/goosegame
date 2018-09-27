@@ -12,6 +12,8 @@ import java.io.IOException;
  * /players/{name}/rolls    dice1=5   dice2=4       (opzionali)
  */
 public class GooseGameWrapperServlet extends HttpServlet {
+    private GooseGame goose = new GooseGame();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);
@@ -19,9 +21,19 @@ public class GooseGameWrapperServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // names.add(req.getParameter("name"));
 
-        write(resp, "added");
+        // names.add(req.getParameter("name"));
+        System.out.println("requst - " + req.getPathInfo());
+        String x = req.getPathInfo();
+
+        if (req.getPathInfo().equals("/players/add")) {
+
+
+            write(resp, goose.add(new Player(req.getParameter("name"))));
+        } else {
+            write(resp, goose.userWrite("move Pippo 5, 4"));
+        }
+
     }
 
     private void write(HttpServletResponse resp, String message) throws IOException {
