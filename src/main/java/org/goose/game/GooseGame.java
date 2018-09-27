@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GooseGame {
+    public static final int finalCell = 63;
     private List<Player> players = new ArrayList<Player>();
     private Map<String , Integer> posizioni = new HashMap<String, Integer>();
 
@@ -39,15 +40,16 @@ public class GooseGame {
         String[] comandi = comandoUtente.split(" |, ");
 
         if (comandi[0].equals("move")) {
-            int posizioneCorrente = posizioni.get(comandi[1]);
+            String currentPlayer = comandi[1];
+            int posizioneCorrente = posizioni.get(currentPlayer);
             int sum = calculateNewPosition(comandi, posizioneCorrente);
-            posizioni.replace(comandi[1],sum);
+            posizioni.replace(currentPlayer,sum);
             String posizionePrecedente = Integer.toString(posizioneCorrente);
             posizionePrecedente = chkStartPosition(posizioneCorrente, posizionePrecedente);
 
 
-            String output = comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " + comandi[1] +" moves from " + posizionePrecedente;
-            output = chkWinner(comandi, sum, output);
+            String output = currentPlayer + " rools " + comandi[2] + ", "+ comandi[3] + ". " + currentPlayer +" moves from " + posizionePrecedente;
+            output = chkWinner(currentPlayer , sum, output);
             return output;
         }
 
@@ -64,18 +66,18 @@ public class GooseGame {
         return posizionePrecedente;
     }
 
-    private String chkWinner(String[] comandi, int sum, String output) {
+    private String chkWinner(String currentPlayer ,  int sum, String output) {
         String esito = "";
-        if (sum == 63) {
-            esito = ". " + comandi[1] + " Wins!!";
-            return output + " to 63" + esito;
+        if (sum == finalCell) {
+            esito = ". " + currentPlayer + " Wins!!";
+            return output + " to " + finalCell + esito;
         }
-        else if (sum > 63){
-            Integer overposition = sum - 63;
+        else if (sum > finalCell){
+            Integer overposition = sum - finalCell;
             sum = sum - overposition;
 
-            esito = ". " + comandi[1] + " bounces! Pippo returns to " + (sum - overposition);
-            return output + " to 63" + esito;
+            esito = ". " + currentPlayer + " bounces! " + currentPlayer + " returns to " + (sum - overposition);
+            return output + " to " + finalCell + esito;
         }
         return  output + " to " + sum;
     }
