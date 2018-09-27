@@ -1,16 +1,16 @@
 package org.goose.game;
 
-public class Player {
+class Player {
 
     private String name;
     private int position;
 
-    public Player(String name) {
+    Player(String name) {
             this.name = name;
             this.position = 0;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -21,6 +21,7 @@ public class Player {
         return getName().equals(obj.toString());
     }
 
+    @Override
     public String toString() {
         return getName();
     }

@@ -69,7 +69,7 @@ public class GooseGameOnlineTest {
     }
 
     @Test
-    public void testRollsPlutoAndPippo() throws URISyntaxException, IOException {
+    public void testRollsPlutoAndPippoAndRool() throws URISyntaxException, IOException {
         HttpForm form = new HttpForm(new URI("http://localhost:4567/players/add"));
         form.putFieldValue("name", "Pluto");
         HttpResponse response = form.doPost();
@@ -87,5 +87,15 @@ public class GooseGameOnlineTest {
         form.putFieldValue("dice2", "4");
         response = form.doPost();
         assertThat(response.getData(), is("Pippo rools 5, 4. Pippo moves from Start to 9"));
+    }
+
+    @Test
+    public void testRollsPlutoAndPippo() throws URISyntaxException, IOException {
+        HttpForm form = new HttpForm(new URI("http://localhost:4567/players/add"));
+        form.putFieldValue("name", "Pippo");
+        HttpResponse response = form.doPost();
+        form.putFieldValue("name", "Pluto");
+        response = form.doPost();
+        assertThat(response.getData(), is("players: Pippo, Pluto"));
     }
 }

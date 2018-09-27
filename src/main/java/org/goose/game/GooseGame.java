@@ -10,7 +10,11 @@ public class GooseGame {
     private List<Player> players = new ArrayList<Player>();
     private Map<String , Integer> posizioni = new HashMap<String, Integer>();
 
-    public String add(Player player) {
+    public String add(String name) {
+        return add(new Player(name));
+    }
+
+    private String add(Player player) {
 
         if (players.contains(player)) {
             return player.getName() + ": already exisiting player";
@@ -20,20 +24,6 @@ public class GooseGame {
         posizioni.put(player.getName() ,0);
         return getPlayerNames();
     }
-
-    private String getPlayerNames() {
-        String listOfPlayers = null;
-        for (Player player: players
-             ) {
-             if (listOfPlayers == null){
-                 listOfPlayers = "players: " + player.getName();
-             }else {
-                 listOfPlayers += ", " + player.getName();
-             }
-        }
-        return listOfPlayers;
-    }
-
 
     public String userWrite(String comandoUtente) {
 
@@ -80,5 +70,18 @@ public class GooseGame {
             return output + " to " + finalCell + esito;
         }
         return  output + " to " + sum;
+    }
+
+    private String getPlayerNames() {
+        String listOfPlayers = null;
+        for (Player player: players
+        ) {
+            if (listOfPlayers == null){
+                listOfPlayers = "players: " + player.getName();
+            }else {
+                listOfPlayers += ", " + player.getName();
+            }
+        }
+        return listOfPlayers;
     }
 }

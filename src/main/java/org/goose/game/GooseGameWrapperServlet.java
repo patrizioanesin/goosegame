@@ -27,7 +27,7 @@ public class GooseGameWrapperServlet extends HttpServlet {
         String[] y = req.getPathInfo().split("/");
 
         if (y[y.length - 1].equals("add")) {
-            write(resp, goose.add(new Player(req.getParameter("name"))));
+            write(resp, goose.add(req.getParameter("name")));
         } else if (y[y.length - 1].equals("rolls")) {
             write(resp, goose.userWrite("move " + y[y.length - 2] + " " + req.getParameter("dice1") +
                     ", " + req.getParameter("dice2")));
