@@ -7,8 +7,17 @@ import java.util.Map;
 
 public class GooseGame {
     public static final int finalCell = 63;
+    private IDice dice;
     private List<Player> players = new ArrayList<Player>();
     private Map<String , Integer> posizioni = new HashMap<String, Integer>();
+
+    public GooseGame() {
+        this.dice = new RandomDice();
+    }
+
+    public GooseGame(IDice dice) {
+        this.dice = dice;
+    }
 
     public String add(String name) {
         return add(new Player(name));
@@ -30,8 +39,12 @@ public class GooseGame {
         String[] comandi = comandoUtente.split(" |, ");
 
         if (comandi[0].equals("move")) {
+            if (comandi.length == 2)
+                comandi = lanciaDadi(comandi);
             String currentPlayer = comandi[1];
             int posizioneCorrente = posizioni.get(currentPlayer);
+
+
             int sum = calculateNewPosition(comandi, posizioneCorrente);
             posizioni.replace(currentPlayer,sum);
             String posizionePrecedente = Integer.toString(posizioneCorrente);
@@ -43,11 +56,26 @@ public class GooseGame {
             return output;
         }
 
+
         return "Comando Sconosiuto";
     }
 
+    private String[] lanciaDadi(String[] comandi) {
+        //define the new array
+        String[] nuoviComandi = new String[comandi.length + 2];
+
+        for(int i=0;i < comandi.length;i++)
+            nuoviComandi[i] = comandi[i];
+
+        dice.roll();
+        nuoviComandi[nuoviComandi.length-2] = dice.getDice1()+"";
+        nuoviComandi[nuoviComandi.length-1] = dice.getDice2()+"";
+
+        return nuoviComandi;
+    }
+
     private int calculateNewPosition(String[] comandi, int posizioneCorrente) {
-        return posizioneCorrente + Integer.parseInt(comandi[2])  + Integer.parseInt(comandi[3]);
+        return posizioneCorrente + Integer.parseInt(comandi[2]) + Integer.parseInt(comandi[3]);
     }
 
     private String chkStartPosition(int posizioneCorrente, String posizionePrecedente) {

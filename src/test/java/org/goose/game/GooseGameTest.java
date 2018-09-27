@@ -13,7 +13,7 @@ public class GooseGameTest {
 
     @Before
     public void initialize(){
-        goso = new GooseGame();
+        goso = new GooseGame(new FixedDice());
     }
 
     @Test
@@ -81,6 +81,26 @@ public class GooseGameTest {
         assertEquals("Pippo rools 3, 2. Pippo moves from 60 to 63. Pippo bounces! Pippo returns to 61" ,goso.userWrite("move Pippo 3, 2")  );
     }
 
+    @Test
+    public void playerPippoDiceRoll() {
+        goso.add("Pippo");
+        goso.userWrite("move Pippo 2, 2");
+        assertEquals("Pippo rools 1, 2. Pippo moves from 4 to 7" ,goso.userWrite("move Pippo")  );
+    }
 
+    private class FixedDice implements IDice {
+
+        public String roll() {
+            return getDice1() + ", " + getDice2();
+        }
+
+        public int getDice1() {
+            return 1;
+        }
+
+        public int getDice2() {
+            return 2;
+        }
+    }
 
 }
