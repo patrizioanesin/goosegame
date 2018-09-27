@@ -41,7 +41,7 @@ public class GooseGameOnlineTest {
     }
 
     @Test
-    public void testRolls() throws URISyntaxException, IOException {
+    public void testRollsPippo() throws URISyntaxException, IOException {
         HttpForm form = new HttpForm(new URI("http://localhost:4567/players/add"));
         form.putFieldValue("name", "Pippo");
         HttpResponse response = form.doPost();
@@ -51,6 +51,41 @@ public class GooseGameOnlineTest {
         form.putFieldValue("dice2", "4");
         response = form.doPost();
 
+        assertThat(response.getData(), is("Pippo rools 5, 4. Pippo moves from Start to 9"));
+    }
+
+    @Test
+    public void testRollsPluto() throws URISyntaxException, IOException {
+        HttpForm form = new HttpForm(new URI("http://localhost:4567/players/add"));
+        form.putFieldValue("name", "Pluto");
+        HttpResponse response = form.doPost();
+
+        form = new HttpForm(new URI("http://localhost:4567/players/Pluto/rolls"));
+        form.putFieldValue("dice1", "6");
+        form.putFieldValue("dice2", "2");
+        response = form.doPost();
+
+        assertThat(response.getData(), is("Pluto rools 6, 2. Pluto moves from Start to 8"));
+    }
+
+    @Test
+    public void testRollsPlutoAndPippo() throws URISyntaxException, IOException {
+        HttpForm form = new HttpForm(new URI("http://localhost:4567/players/add"));
+        form.putFieldValue("name", "Pluto");
+        HttpResponse response = form.doPost();
+        form.putFieldValue("name", "Pippo");
+        response = form.doPost();
+
+        form = new HttpForm(new URI("http://localhost:4567/players/Pluto/rolls"));
+        form.putFieldValue("dice1", "6");
+        form.putFieldValue("dice2", "2");
+        response = form.doPost();
+        assertThat(response.getData(), is("Pluto rools 6, 2. Pluto moves from Start to 8"));
+
+        form = new HttpForm(new URI("http://localhost:4567/players/Pippo/rolls"));
+        form.putFieldValue("dice1", "5");
+        form.putFieldValue("dice2", "4");
+        response = form.doPost();
         assertThat(response.getData(), is("Pippo rools 5, 4. Pippo moves from Start to 9"));
     }
 }

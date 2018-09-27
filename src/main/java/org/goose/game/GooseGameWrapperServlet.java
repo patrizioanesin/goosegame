@@ -24,14 +24,15 @@ public class GooseGameWrapperServlet extends HttpServlet {
 
         // names.add(req.getParameter("name"));
         System.out.println("requst - " + req.getPathInfo());
-        String x = req.getPathInfo();
+        String[] y = req.getPathInfo().split("/");
 
-        if (req.getPathInfo().equals("/players/add")) {
-
-
+        if (y[y.length - 1].equals("add")) {
             write(resp, goose.add(new Player(req.getParameter("name"))));
+        } else if (y[y.length - 1].equals("rolls")) {
+            write(resp, goose.userWrite("move " + y[y.length - 2] + " " + req.getParameter("dice1") +
+                    ", " + req.getParameter("dice2")));
         } else {
-            write(resp, goose.userWrite("move Pippo 5, 4"));
+            throw new ServletException("HTTP 500 : Internal server error");
         }
 
     }
