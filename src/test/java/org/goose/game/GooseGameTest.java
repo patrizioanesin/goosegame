@@ -43,6 +43,7 @@ public class GooseGameTest {
 
     @Test
     public void movePlayerPippo(){
+
         goso.add(new Player("Pippo"));
         goso.add(new Player("Pluto"));
 
@@ -57,4 +58,11 @@ public class GooseGameTest {
         assertEquals("Pluto rools 2, 2. Pluto moves from Start to 4" ,  goso.userWrite("move Pluto 2, 2"));
     }
 
+    @Test
+    public void movePlayerPippoTo11(){
+        goso.add(new Player("Pippo"));
+        goso.add(new Player("Pluto"));
+        goso.userWrite("move Pippo 4, 2");
+        assertEquals("Pippo rools 2, 3. Pippo moves from 6 to 11" ,  goso.userWrite("move Pippo 2, 3"));
+    }
 }

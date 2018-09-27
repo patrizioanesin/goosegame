@@ -1,10 +1,13 @@
 package org.goose.game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GooseGame {
     private List<Player> players = new ArrayList<Player>();
+    private Map<String , Integer> posizioni = new HashMap<String, Integer>();
 
     public String add(Player player) {
 
@@ -13,6 +16,7 @@ public class GooseGame {
         }
 
         players.add(player);
+        posizioni.put(player.getName() ,0);
         return getPlayerNames();
     }
 
@@ -35,8 +39,13 @@ public class GooseGame {
         String[] comandi = comandoUtente.split(" |, ");
 
         if (comandi[0].equals("move")) {
-            int sum  = Integer.parseInt(comandi[2])  + Integer.parseInt(comandi[3]);
-            return comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " +comandi[1] +" moves from Start to " + sum;
+            int posizioneCorrente = posizioni.get(comandi[1]);
+            int sum  = posizioneCorrente + Integer.parseInt(comandi[2])  + Integer.parseInt(comandi[3]);
+            posizioni.replace(comandi[1],sum);
+            String posizionePrecedente = posizioneCorrente+"";
+            if (posizioneCorrente == 0)
+                posizionePrecedente = "Start";
+            return comandi[1] + " rools " + comandi[2] + ", "+ comandi[3] + ". " + comandi[1] +" moves from "+posizionePrecedente+" to " + sum;
         }
 
         return "Comando Sconosiuto";
